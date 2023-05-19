@@ -1,0 +1,18 @@
+{
+  "name": "timing-reply",
+  "version": "1.0.0",
+  "description": "三国杀社区定时回复",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "dayjs": "^1.11.7",
+    "js-md5": "^0.7.3",
+    "node-schedule": "^2.1.1"
+  }
+}
