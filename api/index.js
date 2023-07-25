@@ -34,17 +34,18 @@ exports.getlist = (token) => request({
   headers: { authenticate: token },
 })
 
-exports.create = ({ fid, tid, token, verify, message, author }) => request({
-  url: '/wx/post/create',
-  method: 'POST',
-  headers: { Authenticate: token },
-  data: {
-    fid,
-    tid,
-    message,
-    "img_urls": [],
-    "reply_to": author,
-    "emojy": 0,
-    verify
-  },
-})
+exports.create = ({ fid, tid, TOKEN, verify, message, AUTHOR }) =>
+  request({
+    url: '/wx/post/create',
+    method: 'POST',
+    headers: { Authenticate: TOKEN },
+    data: {
+      fid,
+      tid,
+      message,
+      img_urls: [],
+      reply_to: AUTHOR,
+      emojy: 0,
+      verify
+    }
+  })

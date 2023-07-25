@@ -49,7 +49,7 @@ const safetoken = async ({ fid, tid }) => {
 
 const reply = async ({ fid, tid, message, verify }) => {
   await sleep(200)
-  let res = await create({ fid, tid, token, message, verify, author })
+  let res = await create({ fid, tid, TOKEN: token, message, verify, AUTHOR: author })
   if (res.code == '0') {
     console.log(res.data)
     complete = true
