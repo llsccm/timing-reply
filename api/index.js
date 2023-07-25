@@ -1,5 +1,5 @@
-const axios = require('axios/dist/node/axios.cjs') //旧版node
-// const axios = require('axios') //新版node
+//const axios = require('axios/dist/node/axios.cjs') //旧版node
+const axios = require('axios') //新版node
 
 const request = axios.create({
   baseURL: 'https://preolforum.sanguosha.com',
