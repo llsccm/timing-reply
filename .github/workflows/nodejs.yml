@@ -1,0 +1,28 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: reply-action
+
+on:
+  schedule:
+    - cron: '0 5 * * *' # 定时运行的时间，国际标准时间，北京时间要+8
+  workflow_dispatch:
+
+jobs:
+  run-coupons: # 任务名
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      #安装node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      #安装依赖 执行
+      - name: Install Dependency
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
+          AUTHOR: ${{ secrets.AUTHOR }}
+        run: |
+          npm install
+          node ./app.js
