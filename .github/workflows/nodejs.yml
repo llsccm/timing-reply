@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-coupons: # 任务名
+  run: # 任务名
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -24,6 +24,7 @@ jobs:
         env:
           TOKEN: ${{ secrets.TOKEN }}
           AUTHOR: ${{ secrets.AUTHOR }}
+          APIURL: ${{ secrets.APIURL }}
         run: |
           npm install
           node ./app.js
