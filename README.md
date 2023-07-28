@@ -4,7 +4,9 @@
 ### 安装
 ```bash
 git clone git@github.com:llsccm/timing-reply.git
+
 npm i
+
 ```
 ### 使用
 将获取的TOKEN和UID填写在USER_TOKEN.js中

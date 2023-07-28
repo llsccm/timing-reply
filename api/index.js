@@ -4,7 +4,7 @@ const axios = require('axios') //新版node
 const request = axios.create({
   baseURL: 'https://preolforum.sanguosha.com',
   timeout: 12000,
-  withCredentials: true,
+  withCredentials: true
 })
 
 request.interceptors.request.use((config) => {
@@ -13,7 +13,6 @@ request.interceptors.request.use((config) => {
 
 request.interceptors.response.use(
   (res) => {
-    // console.log(res.data)
     return res.data
   },
   (err) => {
@@ -22,17 +21,19 @@ request.interceptors.response.use(
   }
 )
 
-exports.getVerify = (token) => request({
-  url: '/wx/thread/token',
-  method: 'POST',
-  headers: { authenticate: token },
-})
+exports.getVerify = (token) =>
+  request({
+    url: '/wx/thread/token',
+    method: 'POST',
+    headers: { authenticate: token }
+  })
 
-exports.getlist = (token) => request({
-  url: '/wx/friend/thread/list?uid=1070388&friendId=1070388&page=1',
-  method: 'GET',
-  headers: { authenticate: token },
-})
+exports.getlist = (token) =>
+  request({
+    url: '/wx/friend/thread/list?uid=1070388&friendId=1070388&page=1',
+    method: 'GET',
+    headers: { authenticate: token }
+  })
 
 exports.create = ({ fid, tid, TOKEN, verify, message, AUTHOR }) =>
   request({

@@ -4,11 +4,14 @@ const customParseFormat = require('dayjs/plugin/customParseFormat')
 dayjs.extend(customParseFormat)
 const md5 = require('js-md5')
 const { getlist, getVerify, create } = require('./api')
-const messageList = require('./src/messagelist')
+const { getMsg, localMsg } = require('./src/msg')
 
-const TOKEN = process.env.TOKEN || ''
-const AUTHOR = process.env.AUTHOR || ''
-// console.log(TOKEN, AUTHOR)
+const TOKEN = process.env.TOKEN || null
+const AUTHOR = process.env.AUTHOR || null
+
+if (!TOKEN || !AUTHOR) return
+
+let message = localMsg()
 
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -38,7 +41,6 @@ const safetoken = async ({ fid, tid }) => {
   let res = await getVerify(TOKEN) //获取safetoken
   if (res.code == '0') {
     let safe = res.data.verify_token
-    let message = messageList[dayjs().day()]
     let verify = md5(message.length + safe)
     reply({ fid, tid, message, verify })
   } else {
@@ -52,13 +54,20 @@ const reply = async ({ fid, tid, message, verify }) => {
   if (res.code == '0') {
     console.log(res.data)
   } else {
-    console.log('访问频繁', res)
-
+    console.log('访问异常', res)
   }
 }
 
-if (TOKEN && AUTHOR) {
-  gettid()
+if (process.env.APIURL) {
+  getMsg()
+    .then((res) => {
+      if (res.code == 0) message = res.data.msg
+      console.log(message)
+      gettid()
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 } else {
-  console.log('请填写token和author')
+  gettid()
 }
