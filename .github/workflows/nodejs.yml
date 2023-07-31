@@ -4,8 +4,8 @@
 name: reply-action
 
 on:
-  # schedule:
-  #   - cron: '0 5 * * *' # 定时运行的时间，国际标准时间，北京时间要+8
+  schedule:
+    - cron: '0 5 * * *' # 定时运行的时间，国际标准时间，北京时间要+8
   workflow_dispatch:
 
 jobs:
