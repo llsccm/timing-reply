@@ -52,7 +52,7 @@ const reply = async ({ fid, tid, message, verify }) => {
   await sleep(200)
   let res = await create({ fid, tid, TOKEN, message, verify, AUTHOR })
   if (res.code == '0') {
-    console.log(res.data)
+    console.log(res.data?.reward)
   } else {
     console.log('访问异常', res)
   }
