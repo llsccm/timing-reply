@@ -1,4 +1,4 @@
-// require('dotenv').config()
+require('dotenv').config()
 const dayjs = require('dayjs')
 const customParseFormat = require('dayjs/plugin/customParseFormat')
 dayjs.extend(customParseFormat)
@@ -23,23 +23,24 @@ function sleep(ms) {
 
 const gettid = async () => {
   let res = await getlist(TOKEN)
-  if (res.code == 0) {
+  if (res?.code == 0) {
     const list = res.data.list
-    let { fid, tid, title } = list[0]
     const today = dayjs().format('YYYY.M.D')
-    if (title.indexOf(today) != -1) {
-      console.log('匹配标题', title)
-      safetoken({ fid, tid, TOKEN })
-    } else {
-      console.log(today, title)
-    }
+    list.some((item) => {
+      const { fid, tid, title } = item
+      if (title.indexOf(today) != -1) {
+        console.log('匹配标题', title)
+        verifyToken({ fid, tid })
+        return true
+      }
+    })
   }
 }
 
-const safetoken = async ({ fid, tid }) => {
+const verifyToken = async ({ fid, tid }) => {
   await sleep(200)
-  let res = await getVerify(TOKEN) //获取safetoken
-  if (res.code == '0') {
+  let res = await getVerify(TOKEN)
+  if (res?.code == '0') {
     let safe = res.data.verify_token
     let verify = md5(message.length + safe)
     reply({ fid, tid, message, verify })
@@ -51,7 +52,7 @@ const safetoken = async ({ fid, tid }) => {
 const reply = async ({ fid, tid, message, verify }) => {
   await sleep(200)
   let res = await create({ fid, tid, TOKEN, message, verify, AUTHOR })
-  if (res.code == '0') {
+  if (res?.code == '0') {
     console.log(res.data?.reward)
   } else {
     console.log('访问异常', res)
@@ -61,7 +62,7 @@ const reply = async ({ fid, tid, message, verify }) => {
 if (process.env.APIURL) {
   getMsg()
     .then((res) => {
-      if (res.code == 0) message = res.data.msg
+      if (res?.code == 0) message = res.data.msg
       console.log(message)
       gettid()
     })

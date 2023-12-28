@@ -23,20 +23,20 @@ const gettid = async () => {
   let res = await getlist(token)
   if (res.code == 0) {
     const list = res.data.list
-    let { fid, tid, title } = list[0]
-    const today = dayjs().format('YYYY.M.D')
-    if (title.indexOf(today) != -1) {
-      console.log('标题', title)
-      safetoken({ fid, tid, token })
-    } else {
-      console.log(today, title)
-    }
+    list.some((item) => {
+      const { fid, tid, title } = item
+      if (title.indexOf(today) != -1) {
+        console.log('匹配标题', title)
+        verifyToken({ fid, tid })
+        return true
+      }
+    })
   }
 }
 
-const safetoken = async ({ fid, tid }) => {
+const verifyToken = async ({ fid, tid }) => {
   await sleep(200)
-  let res = await getVerify(token) //获取safetoken
+  let res = await getVerify(token)
   if (res.code == '0') {
     let safe = res.data.verify_token
     let message = messagelist[dayjs().day()]
