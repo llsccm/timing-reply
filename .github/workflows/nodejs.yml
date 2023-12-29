@@ -12,12 +12,12 @@ jobs:
   run: # 任务名
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       #安装node.js
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '14.x'
+          node-version: '16.x'
           cache: 'npm'
       #安装依赖 执行
       - name: Install Dependency & Run
