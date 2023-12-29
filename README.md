@@ -1,5 +1,5 @@
 ## timing-reply
-使用Node.js定时在三国杀社区抢楼
+使用 Node.js 定时在三国杀社区抢楼
 
 ### 安装
 ```bash
@@ -9,7 +9,7 @@ npm i
 
 ```
 ### 使用
-将获取的 TOKEN 和 UID 填写在 `USER_TOKEN.js` 中
+将获取的 TOKEN 和 UID 填写在 `.env` 中
 ```bash
 node index.js
 ```
