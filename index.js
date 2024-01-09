@@ -35,6 +35,7 @@ const gettid = async () => {
         verifyToken({ fid, tid })
         return true
       }
+      return false
     })
   }
 }
