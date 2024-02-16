@@ -9,9 +9,10 @@ const { getlist, getVerify, create } = require('./api')
 const TOKEN = process.env.TOKEN || null
 const AUTHOR = process.env.AUTHOR || null
 let isRandom = process.env.ISRANDOM === 'true' ? true : false
+let APIURL = process.env.APIURL
 let timer = null
 let complete = false
-const messagelist = ['穿梭时间的画面的钟', '从反方向 开始移动', '回到当初爱你的时空', '停格内容 不忠', '迷迷蒙蒙 你给的梦', '出现裂缝 隐隐作痛', '怎么沟通你都没空', '说我不懂 说了没用', '他的笑容 有何不同', '在你心中 我不再受宠']
+let randomMsg = '想得到烟花 马上有烟花 你未看到吗'
 
 if (!TOKEN || !AUTHOR) return
 function sleep(ms) {
@@ -45,7 +46,7 @@ const verifyToken = async ({ fid, tid }) => {
   let res = await getVerify(TOKEN)
   if (res.code == '0') {
     let safe = res.data.verify_token
-    let message = isRandom ? messagelist[dayjs().day()] : '签到打卡'
+    let message = isRandom ? randomMsg : '签到打卡'
     let verify = md5(message.length + safe)
     reply({ fid, tid, message, verify })
   } else {
@@ -62,6 +63,7 @@ const reply = async ({ fid, tid, message, verify }) => {
     timer = setTimeout(() => {
       complete = false
       timer = null
+      getMsg()
     }, 13000)
   } else {
     console.log('访问频繁', res)
@@ -91,3 +93,16 @@ job.on('canceled', () => {
 })
 
 // gettid()
+
+function getMsg() {
+  fetch(APIURL)
+    .then((res) => {
+      res.json().then((res) => {
+        randomMsg = res.data.msg
+        console.log(randomMsg)
+      })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
