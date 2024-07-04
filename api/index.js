@@ -50,3 +50,39 @@ exports.create = ({ fid, tid, TOKEN, verify, message, AUTHOR }) =>
       verify
     }
   })
+
+exports.getGuessList = ({ TOKEN }) => {
+  return request({
+    url: '/v2/game/list',
+    method: 'POST',
+    headers: { Authenticate: TOKEN },
+    data: {
+      contest_id: [],
+      club_id: [],
+      page: 1,
+      sort: 0
+    }
+  })
+}
+
+exports.getGuessInfo = ({ TOKEN, game_id }) => {
+  return request({
+    url: '/v2/game/guessList',
+    method: 'GET',
+    headers: { Authenticate: TOKEN },
+    params: { game_id }
+  })
+}
+
+exports.sendGuess = ({ TOKEN, guess_id, opt_id }) => {
+  return request({
+    url: '/v2/game/guess',
+    method: 'POST',
+    headers: { Authenticate: TOKEN },
+    data: {
+      guess_id,
+      opt_id,
+      coin: 10
+    }
+  })
+}
